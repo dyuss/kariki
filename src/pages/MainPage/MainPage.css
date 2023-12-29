@@ -1,0 +1,11 @@
+.list_item {
+  display: flex;
+}
+
+.game_status {
+  width: 200px;
+}
+
+.game_title {
+  width: 800px;
+}
