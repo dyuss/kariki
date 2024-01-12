@@ -1,26 +1,25 @@
+import { useMemo } from 'preact/hooks';
+import { Filters } from '../../components/Filters/Filters';
+import { List } from '../../components/List/List';
 import './MainPage.css';
 
-import db from './db.json'
+import db from './db.json';
+import { AppStateContext, getDefaultAppState } from '../../contexts/AppState';
 
 export const MainPage = () => {
+  const state = useMemo(() => ({
+    ...getDefaultAppState(),
+    availableStatuses: [...new Set(db.games.map((item) => item.status))],
+  }), [db.games]);
 
   return (
-    <div class="home">
-      <div class="list">
-        {
-          db.games.map(game => (
-            <div key={game.id} class="list_item">
-              <div class="game_title">
-                <a href={game.link} target="_blank">
-                {game.title} 
-                </a>
-                </div>
-              <div class="game_status">{game.status}</div>
-              <div class="game_price">{game.price}</div>
-            </div>
-          ))
-        }
+    <AppStateContext.Provider value={state}>
+      <div className="main-page">
+        <Filters />
+        <List
+          games={db.games}
+        />
       </div>
-    </div>
+    </AppStateContext.Provider>
   );
-}
+};

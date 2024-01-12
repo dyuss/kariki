@@ -1,11 +1,6 @@
-.list_item {
-  display: flex;
-}
-
-.game_status {
-  width: 200px;
-}
-
-.game_title {
-  width: 800px;
+.main-page {
+  margin: 10px;
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 20px;
 }
