@@ -1,6 +1,8 @@
-import { useContext } from 'preact/hooks';
+import { useContext, useMemo } from 'preact/hooks';
 import { Game } from '../../types/Game';
 import { AppStateContext } from '../../contexts/AppState';
+
+import './List.css';
 
 interface Props {
   games: Game[]
@@ -56,14 +58,23 @@ export const List = ({ games }: Props) => {
     }
   };
 
+  const filteredGames = useMemo(() => games
+    .filter(filterGame)
+    .sort(sortGames), [sorting.value, JSON.stringify(filters.value)]);
+
   return (
     <div className="games-list">
+      <div className="games-list__header">
+        Найдено:
+        {' '}
+        {filteredGames.length}
+        /
+        {games.length}
+      </div>
       <table role="grid">
         <tbody>
           {
-            games
-              .filter(filterGame)
-              .sort(sortGames)
+            filteredGames
               .map((game) => (
                 <tr key={game.id}>
                   <td className="game_title">
