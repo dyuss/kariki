@@ -7,7 +7,7 @@ interface Props {
 }
 
 export const List = ({ games }: Props) => {
-  const { filters } = useContext(AppStateContext);
+  const { filters, sorting } = useContext(AppStateContext);
 
   const filterGame = (game: Game) => {
     const { statuses, title } = filters.value;
@@ -23,6 +23,39 @@ export const List = ({ games }: Props) => {
     return isStatus && isTitle;
   };
 
+  const sortById = (first: Game, second: Game) => {
+    if (first.id === second.id) {
+      return 0;
+    }
+    return first.id > second.id ? -1 : 1;
+  };
+
+  const sortByPrice = (first: Game, second: Game) => {
+    if (first.price === second.price) {
+      return 0;
+    }
+    return first.price < second.price ? -1 : 1;
+  };
+
+  const sortByTitle = (first: Game, second: Game) => {
+    if (first.title === second.title) {
+      return 0;
+    }
+    return first.title < second.title ? -1 : 1;
+  };
+
+  const sortGames = (first: Game, second: Game) => {
+    switch (sorting.value) {
+      case 'price':
+        return sortByPrice(first, second);
+      case 'title':
+        return sortByTitle(first, second);
+      case 'id':
+      default:
+        return sortById(first, second);
+    }
+  };
+
   return (
     <div className="games-list">
       <table role="grid">
@@ -30,7 +63,7 @@ export const List = ({ games }: Props) => {
           {
             games
               .filter(filterGame)
-              .sort((a, b) => (+a.price > +b.price ? -1 : 1))
+              .sort(sortGames)
               .map((game) => (
                 <tr key={game.id}>
                   <td className="game_title">
