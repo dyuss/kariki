@@ -1,4 +1,6 @@
 .games-list__header {
   font-weight: 600;
   margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
 }

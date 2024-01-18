@@ -5,10 +5,11 @@ import { AppStateContext } from '../../contexts/AppState';
 import './List.css';
 
 interface Props {
-  games: Game[]
+  games: Game[];
+  date: string;
 }
 
-export const List = ({ games }: Props) => {
+export const List = ({ games, date }: Props) => {
   const { filters, sorting } = useContext(AppStateContext);
 
   const filterGame = (game: Game) => {
@@ -65,11 +66,18 @@ export const List = ({ games }: Props) => {
   return (
     <div className="games-list">
       <div className="games-list__header">
-        Найдено:
-        {' '}
-        {filteredGames.length}
-        /
-        {games.length}
+        <div className="games-list__count">
+          Найдено:
+          {' '}
+          {filteredGames.length}
+          /
+          {games.length}
+        </div>
+        <div className="games-list__date">
+          Обновление:
+          {' '}
+          {new Date(date).toLocaleString()}
+        </div>
       </div>
       <table role="grid">
         <tbody>
