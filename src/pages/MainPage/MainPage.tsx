@@ -21,8 +21,6 @@ export const MainPage = () => {
     fetchDB();
   }, []);
 
-  console.log(db);
-
   if (!db) {
     return null;
   }
