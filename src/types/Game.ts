@@ -4,4 +4,5 @@ export type Game = {
   link: string;
   price: number;
   status: string;
+  condition: 'new' | 'used'
 };
